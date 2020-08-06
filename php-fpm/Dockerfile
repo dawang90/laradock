@@ -114,6 +114,17 @@ RUN if [ ${INSTALL_SSH2} = true ]; then \
 ;fi
 
 ###########################################################################
+# geoip:
+###########################################################################
+RUN apt-get install -y geoip-database libgeoip-dev && \
+	  pecl install geoip-beta && \
+    cd /var/opt && \
+    curl -L -o geoip.zip https://gitee.com/dawang/geoip/repository/archive/master.zip && \
+    unzip geoip.zip && \
+    mv geoip/GeoLiteCity.dat /usr/share/GeoIP/GeoLiteCity.dat && \
+	  docker-php-ext-enable geoip
+
+###########################################################################
 # libfaketime:
 ###########################################################################
 
